@@ -1,5 +1,5 @@
 echo options dummy numdummies=2 >> /etc/modprobe.d/dummy.conf
-sudo yum update
+sudo yum update -y
 sudo tee /etc/yum.repos.d/docker.repo <<-EOF
 [dockerrepo]
 name=Docker Repository
