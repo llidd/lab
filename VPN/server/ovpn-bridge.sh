@@ -113,7 +113,7 @@ case $ans in
       docker run \
       -v $OVPN_DATA:/etc/openvpn \
       -e OVPN_CN="$SERVER CA" \
-      --rm giggsoff/naulinux-openvpn ovpn_genconfig \
+      --rm kylemanna/openvpn ovpn_genconfig \
       -bcdDt \
       -m "$MTU" \
       -e "up tap-up.sh" \
@@ -123,11 +123,11 @@ case $ans in
       -s "192.168.55.0/24" \
       -u "$URL"
 
-     docker run -v $OVPN_DATA:/etc/openvpn --rm -it -e OVPN_CN="$SERVER CA" giggsoff/naulinux-openvpn ovpn_initpki
+     docker run -v $OVPN_DATA:/etc/openvpn --rm -it -e OVPN_CN="$SERVER CA" kylemanna/openvpn ovpn_initpki
      docker create \
       -v $OVPN_DATA:/etc/openvpn -p $PORT:1194/$PROTO \
       --cap-add=NET_ADMIN \
-      --name="$SERVER" giggsoff/naulinux-openvpn
+      --name="$SERVER" kylemanna/openvpn
     
      docker network connect $NETWK $SERVER
     fi
@@ -141,9 +141,9 @@ case $ans in
     fi
     read -p "Input this client name " CLIENT
     docker run -v $OVPN_DATA:/etc/openvpn --rm \
-     -it giggsoff/naulinux-openvpn easyrsa build-client-full $CLIENT nopass
+     -it kylemanna/openvpn easyrsa build-client-full $CLIENT nopass
     docker run -v $OVPN_DATA:/etc/openvpn --rm \
-     giggsoff/naulinux-openvpn ovpn_getclient $CLIENT > $CLIENT.ovpn
+     kylemanna/openvpn ovpn_getclient $CLIENT > $CLIENT.ovpn
     cp $OVPN_DATA/ovpn_env.sh $CLIENT.env
     echo "don't remeber to copy \"$0\", \"$CLIENT.ovpn\", \"$CLIENT.env\" and"
     echo "\"answer\" files to the client working directory on the client's host"
@@ -167,7 +167,7 @@ case $ans in
      docker create \
       -v $OVPN_DATA:/etc/openvpn -p $PORT:1194/$PROTO \
       --cap-add=NET_ADMIN \
-      --name="$CLIENT" giggsoff/naulinux-openvpn
+      --name="$CLIENT" kylemanna/openvpn
      docker network connect $NETWK $CLIENT
     fi
     docker start $CLIENT 
