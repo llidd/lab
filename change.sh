@@ -1,5 +1,5 @@
 #!bin/bash
-rm -r PNPI
+rm -rf PNPI
 tar xpvzf PNPI.tar.gz 
 oldstring='10.10.7.1'
 newstring='10.10.7.1'
