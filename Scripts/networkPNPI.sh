@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 ovs-vsctl add-br br-eth1
-ovs-vsctl add-port br-eth1 dummy2
+ovs-vsctl add-port br-eth1 dummy1
 systemctl restart neutron-openvswitch-agent
 source /home/keystonerc
 projectID=`openstack project list | grep service | awk '{print $2}'`
