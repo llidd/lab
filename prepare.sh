@@ -11,4 +11,4 @@ EOF
 sudo yum install bridge-utils net-tools docker-engine -y
 sudo service docker start
 sudo chkconfig docker on
-
+sudo docker create network public1
