@@ -20,5 +20,5 @@ systemctl start rabbitmq-server
 setenforce 0
 rabbitmqctl add_user openstack password 
 rabbitmqctl set_permissions openstack ".*" ".*" ".*"
-firewall-cmd --add-service={http,https} --permanent
-firewall-cmd --reload
+sudo iptables -I INPUT 1 -p tcp --dport 80 -j ACCEPT
+sudo iptables -I INPUT 1 -p tcp --dport 443 -j ACCEPT
