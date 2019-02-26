@@ -1,14 +1,17 @@
-echo options dummy numdummies=2 >> /etc/modprobe.d/dummy.conf
-sudo yum update -y
-sudo tee /etc/yum.repos.d/docker.repo <<-EOF
-[dockerrepo]
-name=Docker Repository
-baseurl=https://yum.dockerproject.org/repo/main/centos/7
-enabled=1
-gpgcheck=1
-gpgkey=https://yum.dockerproject.org/gpg
-EOF
-sudo yum install bridge-utils net-tools docker-engine -y
-sudo service docker start
-sudo chkconfig docker on
-sudo docker network create public1
+#!/bin/bash
+if [[ $EUID > 0 ]]; then 
+  echo "Please run as root/sudo"
+  exit 1
+else
+  systemctl stop NetworkManager
+  systemctl disable NetworkManager
+  systemctl stop firewalld
+  systemctl disable firewalld
+  systemctl restart network
+  setenforce 0
+  sed -i 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/selinux/config
+  yum install -y centos-release-openstack-rocky
+  yum update -y
+  yum install -y openstack-packstack
+  packstack --gen-answer-file=answer.cfg
+fi

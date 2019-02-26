@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-ip link set brvpn1 down
-brctl delbr brvpn1
-brctl addbr brvpn1
-brctl addif brvpn1 dummy0
-ifconfig dummy0 inet 0.0.0.0
-ifconfig brvpn1
-
