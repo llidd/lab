@@ -10,6 +10,8 @@ else
   systemctl restart network
   setenforce 0
   sed -i 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/selinux/config
+  systemctl start ksmtuned
+  systemctl enable ksmtuned
   yum install -y centos-release-openstack-rocky
   yum update -y
   yum install -y openstack-packstack
