@@ -12,10 +12,4 @@ else
   sed -i 's/CONFIG_SERVICE_WORKERS=%{::processorcount}/CONFIG_SERVICE_WORKERS=1/g' answer.cfg
   INTERFACE=`ip route | grep default | sed -e "s/^.*dev.//" -e "s/.proto.*//"`
   sed -i 's/CONFIG_NEUTRON_OVS_BRIDGE_IFACES=$/CONFIG_NEUTRON_OVS_BRIDGE_IFACES=br-ex:'"$INTERFACE"'/g' answer.cfg
-  #Give more swap space for install
-  dd if=/dev/zero of=/swapfile bs=1M count=4096
-  mkswap /swapfile 
-  chmod 600 /swapfile
-  swapon /swapfile
-  echo 'Swap successfully allocated'
 fi
